@@ -22,8 +22,9 @@ const lis = document.querySelectorAll("#jsUl > li");
 lis.forEach((li) => {
   const ul = document.createElement("ul");
   // ul.classList.add("flex");
-
   li.appendChild(ul);
+  li.childNodes[1].style.height = 0;
+  li.childNodes[1].style.overflow = "hidden";
 });
 
 const liUlEls = document.querySelectorAll("#jsUl > li > ul");
@@ -36,8 +37,6 @@ navMain.forEach((cur, index) => {
     liUlEls[index].appendChild(li);
 
     li.innerText = Arr[cur][i];
-
-    // console.log(`나는 ${i} 번째`);
   }
 });
 
@@ -46,17 +45,20 @@ liUlEls.forEach((ul) => {
   liHeight.push(height);
 });
 
-const maxHeight = Math.max(...liHeight);
+let maxHeight = Math.max(...liHeight);
 
 lis.forEach((li) => {
-  li.childNodes[1].style.height = maxHeight;
-
-  li.addEventListener("mouseover", function (event) {
-    this.childNodes[this.childNodes.length - 1].style.height = maxHeight;
-  });
-
-  li.addEventListener("mouseout", function () {
-    this.childNodes[this.childNodes.length - 1].style.height = 0;
-  });
+  li.addEventListener("mouseout", mouseLeave);
+  li.addEventListener("mouseover", onMouseOver);
 });
-// console.log(navMain);
+
+function onMouseOver() {
+  this.childNodes[1].style.height
+    ? (this.childNodes[1].style.height = maxHeight + "px")
+    : (this.childNodes[1].style.height = 0 + "px");
+}
+
+function mouseLeave() {
+  this.childNodes[this.childNodes.length - 1].style.height = 0;
+  this.childNodes[this.childNodes.length - 1].style.overflow = "none";
+}
