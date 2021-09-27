@@ -12,6 +12,7 @@ const Arr = {
     "main6sub5",
     "main6sub6",
   ],
+  main7: ["main7sub1", "main7sub2", "main7sub3"],
 };
 
 export default Arr;
